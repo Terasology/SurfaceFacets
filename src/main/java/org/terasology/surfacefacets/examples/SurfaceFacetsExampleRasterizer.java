@@ -33,7 +33,7 @@ import org.terasology.world.generation.facets.DensityFacet;
 
 /**
  * Places:
- * Sand if the surface is less than 5 degrees steep
+ * Sand if the surface is less than 15 degrees steep
  * Grass if the surface normal points east
  * Snow otherwise
  */
@@ -44,7 +44,7 @@ import org.terasology.world.generation.facets.DensityFacet;
 })
 public class SurfaceFacetsExampleRasterizer implements WorldRasterizer {
     private static final double DEG2RAD = Math.PI / 180;
-    private static final double MAX_SAND_STEEPNESS = 5 * DEG2RAD;
+    private static final double MAX_SAND_STEEPNESS = 15 * DEG2RAD;
 
     private Block grass;
     private Block snow;
