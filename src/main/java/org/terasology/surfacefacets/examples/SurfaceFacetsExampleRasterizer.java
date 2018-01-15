@@ -28,9 +28,8 @@ import org.terasology.world.chunks.CoreChunk;
 import org.terasology.world.generation.Facet;
 import org.terasology.world.generation.Region;
 import org.terasology.world.generation.Requires;
-import org.terasology.world.generation.WorldRasterizerPlugin;
+import org.terasology.world.generation.WorldRasterizer;
 import org.terasology.world.generation.facets.DensityFacet;
-import org.terasology.world.generator.plugin.RegisterPlugin;
 
 /**
  * Places:
@@ -38,13 +37,12 @@ import org.terasology.world.generator.plugin.RegisterPlugin;
  * Grass if the surface normal points east
  * Snow otherwise
  */
-@RegisterPlugin
 @Requires({
         @Facet(SurfaceNormalFacet.class),
         @Facet(SurfaceSteepnessFacet.class),
         @Facet(DensityFacet.class)
 })
-public class GrassSnowNormalRasterizer implements WorldRasterizerPlugin {
+public class SurfaceFacetsExampleRasterizer implements WorldRasterizer {
     private static final double DEG2RAD = Math.PI / 180;
     private static final double MAX_SAND_STEEPNESS = 5 * DEG2RAD;
 
