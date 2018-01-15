@@ -1,9 +1,14 @@
 {
     "id" : "SurfaceFacets",
     "version" : "0.1.0-SNAPSHOT",
-    "author" : "",
+    "author" : "eviltak",
     "displayName" : "SurfaceFacets",
-    "description" : "",
-    "dependencies" : [],
+    "description" : "A module that contains useful facet plugins that contain surface-level information",
+    "dependencies": [
+            {
+                "id": "Core",
+                "minVersion": "1.0.0"
+            }
+    ],
     "serverSideOnly" : false
 }
