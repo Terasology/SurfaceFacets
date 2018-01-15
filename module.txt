@@ -3,7 +3,7 @@
     "version" : "0.1.0-SNAPSHOT",
     "author" : "eviltak",
     "displayName" : "SurfaceFacets",
-    "description" : "A module that contains useful facet plugins that contain surface-level information",
+    "description" : "A module containing facets that store useful surface-level information and their providers as a plugin",
     "dependencies": [
             {
                 "id": "Core",
