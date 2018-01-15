@@ -24,7 +24,7 @@ import org.terasology.world.generation.facets.base.BaseObjectFacet2D;
  * Contains the surface normal data for each point on a world.
  */
 public class SurfaceNormalFacet extends BaseObjectFacet2D<Vector3f> {
-    public SurfaceNormalFacet(Region3i targetRegion, Border3D border, Class<Vector3f> objectType) {
-        super(targetRegion, border, objectType);
+    public SurfaceNormalFacet(Region3i targetRegion, Border3D border) {
+        super(targetRegion, border, Vector3f.class);
     }
 }
