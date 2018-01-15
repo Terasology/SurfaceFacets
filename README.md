@@ -19,5 +19,3 @@ Produces a `SurfaceSteepnessFacet` with the surface steepness for a world obtain
 You can either directly add the providers to your world builder via `addProvider` or add all of them as plugins via `addPlugins`. The facets contain data as a 2D field of the surface points much like `SurfaceHeightProvider` and can be used in rasterizers.
 
 For an example of how the facets can be used to generate worlds, take a look at the world generator and rasterizer under the `examples` subpackage. The example can be run by using the _SurfaceFacets Example_ world generator after activating the module.
-
-## Screenshots
