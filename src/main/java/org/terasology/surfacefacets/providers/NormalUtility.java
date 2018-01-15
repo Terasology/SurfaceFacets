@@ -24,8 +24,8 @@ class NormalUtility {
         float slopeX = surfaceHeightFacet.getWorld(position.x() + 1, position.y()) -
                 surfaceHeightFacet.getWorld(position.x() - 1, position.y());
 
-        float slopeZ = surfaceHeightFacet.getWorld(position.x() + 1, position.y()) -
-                surfaceHeightFacet.getWorld(position.x() - 1, position.y());
+        float slopeZ = surfaceHeightFacet.getWorld(position.x(), position.y() + 1) -
+                surfaceHeightFacet.getWorld(position.x(), position.y() - 1);
 
         Vector3f normal = new Vector3f(-slopeX, 2, -slopeZ);
         normal.normalize();
