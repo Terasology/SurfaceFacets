@@ -1,6 +1,6 @@
 {
     "id" : "SurfaceFacets",
-    "version" : "0.1.0-SNAPSHOT",
+    "version" : "0.1.0",
     "author" : "eviltak",
     "displayName" : "SurfaceFacets",
     "description" : "A module containing facets that store useful surface-level information and their providers as a plugin",
