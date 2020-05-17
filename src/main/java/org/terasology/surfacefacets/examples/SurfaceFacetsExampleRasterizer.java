@@ -54,10 +54,10 @@ public class SurfaceFacetsExampleRasterizer implements WorldRasterizer {
     @Override
     public void initialize() {
         BlockManager blockManager = CoreRegistry.get(BlockManager.class);
-        grass = blockManager.getBlock("CoreBlocks:Grass");
-        snow = blockManager.getBlock("CoreBlocks:Snow");
-        sand = blockManager.getBlock("CoreBlocks:Sand");
-        stone = blockManager.getBlock("CoreBlocks:Stone");
+        grass = blockManager.getBlock("CoreAssets:Grass");
+        snow = blockManager.getBlock("CoreAssets:Snow");
+        sand = blockManager.getBlock("CoreAssets:Sand");
+        stone = blockManager.getBlock("CoreAssets:Stone");
     }
 
     @Override

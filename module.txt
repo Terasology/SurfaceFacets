@@ -1,11 +1,13 @@
 {
-    "id" : "SurfaceFacets",
-    "version" : "0.1.1-SNAPSHOT",
-    "author" : "eviltak",
-    "displayName" : "SurfaceFacets",
-    "description" : "A module containing facets that store useful surface-level information and their providers as a plugin",
+    "id": "SurfaceFacets",
+    "version": "1.0.0",
+    "author": "eviltak",
+    "displayName": "SurfaceFacets",
+    "description": "A module containing facets that store useful surface-level information and their providers as a plugin",
     "dependencies": [
-        {"id": "Core", "minVersion": "3.0.0"}
+        { "id": "CoreAssets", "minVersion": "2.0.1" },
+        { "id": "CoreWorlds", "minVersion": "1.1.0" }
     ],
-    "serverSideOnly" : false
+    "serverSideOnly": false,
+    "isWorld": true
 }
