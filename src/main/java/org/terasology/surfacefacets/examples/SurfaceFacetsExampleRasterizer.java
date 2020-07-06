@@ -68,7 +68,7 @@ public class SurfaceFacetsExampleRasterizer implements WorldRasterizer {
 
         for (Vector3i position : chunkRegion.getRegion()) {
             Vector2i terrainPosition = new Vector2i(position.x, position.z);
-            Vector3i blockPosition = ChunkMath.calcBlockPos(position);
+            Vector3i blockPosition = ChunkMath.calcRelativeBlockPos(position);
 
             Vector3f normal = surfaceNormalFacet.getWorld(terrainPosition);
             float steepness = surfaceSteepnessFacet.getWorld(terrainPosition);
