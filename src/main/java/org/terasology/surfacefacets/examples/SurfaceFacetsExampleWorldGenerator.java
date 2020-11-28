@@ -17,24 +17,12 @@ package org.terasology.surfacefacets.examples;
 
 import org.terasology.core.world.generator.facetProviders.SeaLevelProvider;
 import org.terasology.core.world.generator.facetProviders.SurfaceToDensityProvider;
-import org.terasology.core.world.generator.rasterizers.TreeRasterizer;
 import org.terasology.engine.SimpleUri;
-import org.terasology.entitySystem.entity.EntityRef;
-import org.terasology.math.Region3i;
-import org.terasology.math.geom.Vector2i;
-import org.terasology.math.geom.Vector3f;
-import org.terasology.math.geom.Vector3i;
 import org.terasology.registry.In;
-import org.terasology.world.WorldProvider;
 import org.terasology.world.generation.BaseFacetedWorldGenerator;
-import org.terasology.world.generation.Region;
-import org.terasology.world.generation.World;
 import org.terasology.world.generation.WorldBuilder;
-import org.terasology.world.generation.facets.SurfaceHeightFacet;
 import org.terasology.world.generator.RegisterWorldGenerator;
 import org.terasology.world.generator.plugin.WorldGeneratorPluginLibrary;
-
-import java.math.RoundingMode;
 
 @RegisterWorldGenerator(id = "surfaceFacetsExample", displayName = "SurfaceFacets Example")
 public class SurfaceFacetsExampleWorldGenerator extends BaseFacetedWorldGenerator {

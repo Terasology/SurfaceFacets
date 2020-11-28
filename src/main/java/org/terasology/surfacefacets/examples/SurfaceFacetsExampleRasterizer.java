@@ -16,7 +16,7 @@
 package org.terasology.surfacefacets.examples;
 
 import org.terasology.math.ChunkMath;
-import org.terasology.math.geom.Vector2i;
+import org.terasology.math.JomlUtil;
 import org.terasology.math.geom.Vector3f;
 import org.terasology.math.geom.Vector3i;
 import org.terasology.registry.CoreRegistry;
@@ -30,6 +30,7 @@ import org.terasology.world.generation.Region;
 import org.terasology.world.generation.Requires;
 import org.terasology.world.generation.WorldRasterizer;
 import org.terasology.world.generation.facets.DensityFacet;
+import org.terasology.world.generation.facets.SurfacesFacet;
 
 /**
  * Places:
@@ -38,6 +39,7 @@ import org.terasology.world.generation.facets.DensityFacet;
  * Snow otherwise
  */
 @Requires({
+        @Facet(SurfacesFacet.class),
         @Facet(SurfaceNormalFacet.class),
         @Facet(SurfaceSteepnessFacet.class),
         @Facet(DensityFacet.class)
@@ -62,22 +64,23 @@ public class SurfaceFacetsExampleRasterizer implements WorldRasterizer {
 
     @Override
     public void generateChunk(CoreChunk chunk, Region chunkRegion) {
+        SurfacesFacet surfacesFacet = chunkRegion.getFacet(SurfacesFacet.class);
         DensityFacet densityFacet = chunkRegion.getFacet(DensityFacet.class);
         SurfaceNormalFacet surfaceNormalFacet = chunkRegion.getFacet(SurfaceNormalFacet.class);
         SurfaceSteepnessFacet surfaceSteepnessFacet = chunkRegion.getFacet(SurfaceSteepnessFacet.class);
 
         for (Vector3i position : chunkRegion.getRegion()) {
-            Vector2i terrainPosition = new Vector2i(position.x, position.z);
             Vector3i blockPosition = ChunkMath.calcRelativeBlockPos(position);
-
-            Vector3f normal = surfaceNormalFacet.getWorld(terrainPosition);
-            float steepness = surfaceSteepnessFacet.getWorld(terrainPosition);
-            float density = densityFacet.getWorld(position);
-
-            if (density >= 1) {
-                chunk.setBlock(blockPosition, stone);
-            } else if (density >= 0) {
+            if (surfacesFacet.getWorld(JomlUtil.from(position))) {
+                Vector3f normal = surfaceNormalFacet.getWorld(position);
+                float steepness = surfaceSteepnessFacet.getWorld(position);
                 chunk.setBlock(blockPosition, getBlockFor(normal, steepness));
+            } else {
+                float density = densityFacet.getWorld(position);
+
+                if (density > 0) {
+                    chunk.setBlock(blockPosition, stone);
+                }
             }
         }
     }

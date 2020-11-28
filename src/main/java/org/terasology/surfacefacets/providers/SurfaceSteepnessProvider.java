@@ -15,40 +15,42 @@
  */
 package org.terasology.surfacefacets.providers;
 
-import org.terasology.math.geom.BaseVector2i;
+import org.terasology.math.geom.BaseVector3i;
 import org.terasology.math.geom.Vector3f;
+import org.terasology.math.geom.Vector3i;
 import org.terasology.surfacefacets.facets.SurfaceNormalFacet;
 import org.terasology.surfacefacets.facets.SurfaceSteepnessFacet;
 import org.terasology.world.generation.Border3D;
 import org.terasology.world.generation.Facet;
-import org.terasology.world.generation.FacetBorder;
 import org.terasology.world.generation.FacetProviderPlugin;
 import org.terasology.world.generation.GeneratingRegion;
 import org.terasology.world.generation.Produces;
 import org.terasology.world.generation.Requires;
-import org.terasology.world.generation.facets.SurfaceHeightFacet;
 import org.terasology.world.generator.plugin.RegisterPlugin;
+
+import java.util.Map;
 
 /**
  * Produces a {@link SurfaceSteepnessFacet} with the surface steepness for a world obtained from its
- * surface heights. Requires a {@link SurfaceHeightFacet}.
+ * surface heights. Requires a {@link SurfaceNormalFacet}.
  */
 @RegisterPlugin
 @Produces(SurfaceSteepnessFacet.class)
-@Requires(@Facet(value = SurfaceHeightFacet.class, border = @FacetBorder(sides = 1)))
+@Requires(@Facet(value = SurfaceNormalFacet.class))
 public class SurfaceSteepnessProvider implements FacetProviderPlugin {
     @Override
     public void process(GeneratingRegion region) {
-        SurfaceHeightFacet surfaceHeightFacet = region.getRegionFacet(SurfaceHeightFacet.class);
+        SurfaceNormalFacet surfaceNormalFacet = region.getRegionFacet(SurfaceNormalFacet.class);
 
-        Border3D border = region.getBorderForFacet(SurfaceNormalFacet.class);
+        Border3D border = region.getBorderForFacet(SurfaceSteepnessFacet.class);
         SurfaceSteepnessFacet surfaceSteepnessFacet = new SurfaceSteepnessFacet(region.getRegion(), border);
 
-        for (BaseVector2i position : surfaceSteepnessFacet.getWorldRegion().contents()) {
-            Vector3f normal = NormalUtility.getNormalAtPosition(surfaceHeightFacet, position);
-            float steepness = (float) Math.acos(normal.dot(Vector3f.up()));
+        Map<BaseVector3i, Vector3f> normals = surfaceNormalFacet.getWorldEntries();
+        for (BaseVector3i position : normals.keySet()) {
+            Vector3f normal = normals.get(position);
+            float steepness = (float) Math.atan2(Math.hypot(normal.x, normal.z), normal.y);
 
-            surfaceSteepnessFacet.setWorld(position, steepness);
+            surfaceSteepnessFacet.setWorld((Vector3i) position, steepness);
         }
 
         region.setRegionFacet(SurfaceSteepnessFacet.class, surfaceSteepnessFacet);

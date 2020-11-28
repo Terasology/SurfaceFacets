@@ -15,7 +15,7 @@
  */
 package org.terasology.surfacefacets.providers;
 
-import org.terasology.math.geom.BaseVector2i;
+import org.terasology.math.Region3i;
 import org.terasology.math.geom.Vector3f;
 import org.terasology.surfacefacets.facets.SurfaceNormalFacet;
 import org.terasology.world.generation.Border3D;
@@ -25,30 +25,57 @@ import org.terasology.world.generation.FacetProviderPlugin;
 import org.terasology.world.generation.GeneratingRegion;
 import org.terasology.world.generation.Produces;
 import org.terasology.world.generation.Requires;
-import org.terasology.world.generation.facets.SurfaceHeightFacet;
+import org.terasology.world.generation.facets.DensityFacet;
+import org.terasology.world.generation.facets.SurfacesFacet;
 import org.terasology.world.generator.plugin.RegisterPlugin;
 
 /**
  * Produces a {@link SurfaceNormalFacet} with the surface normals for a world obtained from its
- * surface heights. Requires a {@link SurfaceHeightFacet}.
+ * surface heights. Requires a {@link SurfacesFacet} and a {@link DensityFacet}.
  */
 @RegisterPlugin
 @Produces(SurfaceNormalFacet.class)
-@Requires(@Facet(value = SurfaceHeightFacet.class, border = @FacetBorder(sides = 1)))
+@Requires({
+    @Facet(value = SurfacesFacet.class),
+    @Facet(value = DensityFacet.class, border = @FacetBorder(sides = 3, top=3, bottom=3)),
+})
 public class SurfaceNormalProvider implements FacetProviderPlugin {
     @Override
     public void process(GeneratingRegion region) {
-        SurfaceHeightFacet surfaceHeightFacet = region.getRegionFacet(SurfaceHeightFacet.class);
+        SurfacesFacet surfacesFacet = region.getRegionFacet(SurfacesFacet.class);
+        DensityFacet densityFacet = region.getRegionFacet(DensityFacet.class);
 
         Border3D border = region.getBorderForFacet(SurfaceNormalFacet.class);
-        SurfaceNormalFacet surfaceNormalFacet = new SurfaceNormalFacet(region.getRegion(), border);
+        SurfaceNormalFacet facet = new SurfaceNormalFacet(region.getRegion(), border);
+        Region3i worldRegion = facet.getWorldRegion();
 
-        for (BaseVector2i position : surfaceNormalFacet.getWorldRegion().contents()) {
-            Vector3f normal = NormalUtility.getNormalAtPosition(surfaceHeightFacet, position);
+        for (int x = worldRegion.minX(); x <= worldRegion.maxX(); x++) {
+            for (int z = worldRegion.minZ(); z <= worldRegion.maxZ(); z++) {
+                for (int surface : surfacesFacet.getWorldColumn(x, z)) {
+                    Vector3f normal = getNormalAtPosition(densityFacet, x, surface, z);
 
-            surfaceNormalFacet.setWorld(position, normal);
+                    facet.setWorld(x, surface, z, normal);
+                }
+            }
         }
 
-        region.setRegionFacet(SurfaceNormalFacet.class, surfaceNormalFacet);
+        region.setRegionFacet(SurfaceNormalFacet.class, facet);
+    }
+
+    private Vector3f getNormalAtPosition(DensityFacet densityFacet, int x0, int y0, int z0) {
+        Vector3f normal = new Vector3f();
+        for (int x = -3; x <= 3; x++) {
+            for (int y = -3; y <= 3; y++) {
+                for (int z = -3; z <= 3; z++) {
+                    // For each position in a sphere
+                    if (12 > x * x + y * y + z * z) {
+                        float density = densityFacet.getWorld(x0 + x, y0 + y, z0 + z);
+                        normal.add(-density * x, -density * y, -density * z);
+                    }
+                }
+            }
+        }
+        normal.safeNormalize();
+        return normal;
     }
 }
