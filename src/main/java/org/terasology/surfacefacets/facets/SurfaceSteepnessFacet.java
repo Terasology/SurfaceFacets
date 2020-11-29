@@ -18,12 +18,13 @@ package org.terasology.surfacefacets.facets;
 import org.terasology.math.Region3i;
 import org.terasology.world.generation.Border3D;
 import org.terasology.world.generation.facets.base.BaseFieldFacet2D;
+import org.terasology.world.generation.facets.base.SparseFieldFacet3D;
 
 /**
  * Contains the surface steepness (angle in radians between the surface normal and the vertical) data for
  * each point in a world.
  */
-public class SurfaceSteepnessFacet extends BaseFieldFacet2D {
+public class SurfaceSteepnessFacet extends SparseFieldFacet3D {
     public SurfaceSteepnessFacet(Region3i targetRegion, Border3D border) {
         super(targetRegion, border);
     }

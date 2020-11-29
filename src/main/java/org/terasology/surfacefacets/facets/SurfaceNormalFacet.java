@@ -18,13 +18,13 @@ package org.terasology.surfacefacets.facets;
 import org.terasology.math.Region3i;
 import org.terasology.math.geom.Vector3f;
 import org.terasology.world.generation.Border3D;
-import org.terasology.world.generation.facets.base.BaseObjectFacet2D;
+import org.terasology.world.generation.facets.base.SparseObjectFacet3D;
 
 /**
  * Contains the surface normal data for each point on a world.
  */
-public class SurfaceNormalFacet extends BaseObjectFacet2D<Vector3f> {
+public class SurfaceNormalFacet extends SparseObjectFacet3D<Vector3f> {
     public SurfaceNormalFacet(Region3i targetRegion, Border3D border) {
-        super(targetRegion, border, Vector3f.class);
+        super(targetRegion, border);
     }
 }

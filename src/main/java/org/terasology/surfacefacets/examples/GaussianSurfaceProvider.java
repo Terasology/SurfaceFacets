@@ -24,9 +24,9 @@ import org.terasology.world.generation.Border3D;
 import org.terasology.world.generation.ConfigurableFacetProvider;
 import org.terasology.world.generation.GeneratingRegion;
 import org.terasology.world.generation.Produces;
-import org.terasology.world.generation.facets.SurfaceHeightFacet;
+import org.terasology.world.generation.facets.ElevationFacet;
 
-@Produces(SurfaceHeightFacet.class)
+@Produces(ElevationFacet.class)
 public class GaussianSurfaceProvider implements ConfigurableFacetProvider {
     public static final Vector2f CENTER = Vector2f.zero();
 
@@ -42,15 +42,15 @@ public class GaussianSurfaceProvider implements ConfigurableFacetProvider {
 
     @Override
     public void process(GeneratingRegion region) {
-        Border3D border = region.getBorderForFacet(SurfaceHeightFacet.class);
-        SurfaceHeightFacet facet = new SurfaceHeightFacet(region.getRegion(), border);
+        Border3D border = region.getBorderForFacet(ElevationFacet.class);
+        ElevationFacet facet = new ElevationFacet(region.getRegion(), border);
 
         Rect2i processRegion = facet.getWorldRegion();
         for (BaseVector2i position : processRegion.contents()) {
             facet.setWorld(position, surfaceSampler.sample(new Vector2f(position.x(), position.y())));
         }
 
-        region.setRegionFacet(SurfaceHeightFacet.class, facet);
+        region.setRegionFacet(ElevationFacet.class, facet);
     }
 
     @Override
