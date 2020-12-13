@@ -18,6 +18,7 @@ package org.terasology.surfacefacets.providers;
 import org.terasology.math.Region3i;
 import org.terasology.math.geom.Vector3f;
 import org.terasology.surfacefacets.facets.SurfaceNormalFacet;
+import org.terasology.world.block.BlockRegion;
 import org.terasology.world.generation.Border3D;
 import org.terasology.world.generation.Facet;
 import org.terasology.world.generation.FacetBorder;
@@ -47,10 +48,10 @@ public class SurfaceNormalProvider implements FacetProviderPlugin {
 
         Border3D border = region.getBorderForFacet(SurfaceNormalFacet.class);
         SurfaceNormalFacet facet = new SurfaceNormalFacet(region.getRegion(), border);
-        Region3i worldRegion = facet.getWorldRegion();
+        BlockRegion worldRegion = facet.getWorldRegion();
 
-        for (int x = worldRegion.minX(); x <= worldRegion.maxX(); x++) {
-            for (int z = worldRegion.minZ(); z <= worldRegion.maxZ(); z++) {
+        for (int x = worldRegion.getMinX(); x <= worldRegion.getMaxX(); x++) {
+            for (int z = worldRegion.getMinZ(); z <= worldRegion.getMaxZ(); z++) {
                 for (int surface : surfacesFacet.getWorldColumn(x, z)) {
                     Vector3f normal = getNormalAtPosition(densityFacet, x, surface, z);
 

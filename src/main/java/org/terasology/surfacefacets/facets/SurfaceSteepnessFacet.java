@@ -15,9 +15,8 @@
  */
 package org.terasology.surfacefacets.facets;
 
-import org.terasology.math.Region3i;
+import org.terasology.world.block.BlockRegion;
 import org.terasology.world.generation.Border3D;
-import org.terasology.world.generation.facets.base.BaseFieldFacet2D;
 import org.terasology.world.generation.facets.base.SparseFieldFacet3D;
 
 /**
@@ -25,7 +24,7 @@ import org.terasology.world.generation.facets.base.SparseFieldFacet3D;
  * each point in a world.
  */
 public class SurfaceSteepnessFacet extends SparseFieldFacet3D {
-    public SurfaceSteepnessFacet(Region3i targetRegion, Border3D border) {
+    public SurfaceSteepnessFacet(BlockRegion targetRegion, Border3D border) {
         super(targetRegion, border);
     }
 }

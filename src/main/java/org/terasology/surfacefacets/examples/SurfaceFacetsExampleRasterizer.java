@@ -15,15 +15,17 @@
  */
 package org.terasology.surfacefacets.examples;
 
+import org.joml.Vector3i;
+import org.joml.Vector3ic;
 import org.terasology.math.ChunkMath;
 import org.terasology.math.JomlUtil;
 import org.terasology.math.geom.Vector3f;
-import org.terasology.math.geom.Vector3i;
 import org.terasology.registry.CoreRegistry;
 import org.terasology.surfacefacets.facets.SurfaceNormalFacet;
 import org.terasology.surfacefacets.facets.SurfaceSteepnessFacet;
 import org.terasology.world.block.Block;
 import org.terasology.world.block.BlockManager;
+import org.terasology.world.block.BlockRegions;
 import org.terasology.world.chunks.CoreChunk;
 import org.terasology.world.generation.Facet;
 import org.terasology.world.generation.Region;
@@ -69,9 +71,9 @@ public class SurfaceFacetsExampleRasterizer implements WorldRasterizer {
         SurfaceNormalFacet surfaceNormalFacet = chunkRegion.getFacet(SurfaceNormalFacet.class);
         SurfaceSteepnessFacet surfaceSteepnessFacet = chunkRegion.getFacet(SurfaceSteepnessFacet.class);
 
-        for (Vector3i position : chunkRegion.getRegion()) {
-            Vector3i blockPosition = ChunkMath.calcRelativeBlockPos(position);
-            if (surfacesFacet.getWorld(JomlUtil.from(position))) {
+        for (Vector3ic position : BlockRegions.iterableInPlace(chunkRegion.getRegion())) {
+            Vector3i blockPosition = ChunkMath.calcRelativeBlockPos(position, new Vector3i());
+            if (surfacesFacet.getWorld(position)) {
                 Vector3f normal = surfaceNormalFacet.getWorld(position);
                 float steepness = surfaceSteepnessFacet.getWorld(position);
                 chunk.setBlock(blockPosition, getBlockFor(normal, steepness));

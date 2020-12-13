@@ -15,6 +15,7 @@
  */
 package org.terasology.surfacefacets.providers;
 
+import org.joml.Vector3ic;
 import org.terasology.math.geom.BaseVector3i;
 import org.terasology.math.geom.Vector3f;
 import org.terasology.math.geom.Vector3i;
@@ -45,12 +46,12 @@ public class SurfaceSteepnessProvider implements FacetProviderPlugin {
         Border3D border = region.getBorderForFacet(SurfaceSteepnessFacet.class);
         SurfaceSteepnessFacet surfaceSteepnessFacet = new SurfaceSteepnessFacet(region.getRegion(), border);
 
-        Map<BaseVector3i, Vector3f> normals = surfaceNormalFacet.getWorldEntries();
-        for (BaseVector3i position : normals.keySet()) {
+        Map<Vector3ic, Vector3f> normals = surfaceNormalFacet.getWorldEntries();
+        for (Vector3ic position : normals.keySet()) {
             Vector3f normal = normals.get(position);
             float steepness = (float) Math.atan2(Math.hypot(normal.x, normal.z), normal.y);
 
-            surfaceSteepnessFacet.setWorld((Vector3i) position, steepness);
+            surfaceSteepnessFacet.setWorld(position, steepness);
         }
 
         region.setRegionFacet(SurfaceSteepnessFacet.class, surfaceSteepnessFacet);
