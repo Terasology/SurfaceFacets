@@ -15,11 +15,14 @@
  */
 package org.terasology.surfacefacets.examples;
 
+import org.joml.Vector2ic;
 import org.terasology.entitySystem.Component;
 import org.terasology.math.geom.BaseVector2i;
 import org.terasology.math.geom.Rect2i;
 import org.terasology.math.geom.Vector2f;
 import org.terasology.nui.properties.Range;
+import org.terasology.world.block.BlockArea;
+import org.terasology.world.block.BlockAreac;
 import org.terasology.world.generation.Border3D;
 import org.terasology.world.generation.ConfigurableFacetProvider;
 import org.terasology.world.generation.GeneratingRegion;
@@ -45,8 +48,8 @@ public class GaussianSurfaceProvider implements ConfigurableFacetProvider {
         Border3D border = region.getBorderForFacet(ElevationFacet.class);
         ElevationFacet facet = new ElevationFacet(region.getRegion(), border);
 
-        Rect2i processRegion = facet.getWorldRegion();
-        for (BaseVector2i position : processRegion.contents()) {
+        BlockAreac processRegion = facet.getWorldRegion();
+        for (Vector2ic position : processRegion) {
             facet.setWorld(position, surfaceSampler.sample(new Vector2f(position.x(), position.y())));
         }
 
