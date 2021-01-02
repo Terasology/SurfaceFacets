@@ -48,8 +48,7 @@ public class GaussianSurfaceProvider implements ConfigurableFacetProvider {
         Border3D border = region.getBorderForFacet(ElevationFacet.class);
         ElevationFacet facet = new ElevationFacet(region.getRegion(), border);
 
-        BlockAreac processRegion = facet.getWorldRegion();
-        for (Vector2ic position : processRegion) {
+        for (Vector2ic position : facet.getWorldArea()) {
             facet.setWorld(position, surfaceSampler.sample(new Vector2f(position.x(), position.y())));
         }
 
