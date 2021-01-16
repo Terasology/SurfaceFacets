@@ -15,24 +15,22 @@
  */
 package org.terasology.surfacefacets.examples;
 
-import org.terasology.math.geom.Vector2f;
+import org.joml.Vector2f;
+import org.joml.Vector2fc;
 
 public final class GaussianSurfaceSampler {
     public final float height;
     public final Vector2f radius;
     public final Vector2f center;
 
-    public GaussianSurfaceSampler(Vector2f center, Vector2f radius, float height) {
+    public GaussianSurfaceSampler(Vector2fc center, Vector2fc radius, float height) {
         this.height = height;
-        this.radius = radius;
-        this.center = center;
+        this.radius = new Vector2f(radius);
+        this.center = new Vector2f(center);
     }
 
-    public float sample(Vector2f point) {
-        Vector2f normalizedOffset = point.sub(center);
-        normalizedOffset.divX(radius.x);
-        normalizedOffset.divY(radius.y);
-
+    public float sample(Vector2fc point) {
+        Vector2f normalizedOffset = point.sub(center, new Vector2f()).div(radius);
         return (float) (height / Math.exp(normalizedOffset.lengthSquared() / 2));
     }
 }

@@ -15,14 +15,11 @@
  */
 package org.terasology.surfacefacets.examples;
 
+import org.joml.Vector2f;
+import org.joml.Vector2fc;
 import org.joml.Vector2ic;
 import org.terasology.entitySystem.Component;
-import org.terasology.math.geom.BaseVector2i;
-import org.terasology.math.geom.Rect2i;
-import org.terasology.math.geom.Vector2f;
 import org.terasology.nui.properties.Range;
-import org.terasology.world.block.BlockArea;
-import org.terasology.world.block.BlockAreac;
 import org.terasology.world.generation.Border3D;
 import org.terasology.world.generation.ConfigurableFacetProvider;
 import org.terasology.world.generation.GeneratingRegion;
@@ -31,7 +28,7 @@ import org.terasology.world.generation.facets.ElevationFacet;
 
 @Produces(ElevationFacet.class)
 public class GaussianSurfaceProvider implements ConfigurableFacetProvider {
-    public static final Vector2f CENTER = Vector2f.zero();
+    public static final Vector2fc CENTER = new Vector2f(0, 0);
 
     private GaussianSurfaceSampler surfaceSampler;
 

@@ -15,15 +15,16 @@
  */
 package org.terasology.surfacefacets.examples;
 
+import org.joml.Vector3fc;
 import org.joml.Vector3i;
 import org.joml.Vector3ic;
-import org.terasology.math.ChunkMath;
-import org.terasology.math.geom.Vector3f;
+import org.terasology.math.Direction;
 import org.terasology.registry.CoreRegistry;
 import org.terasology.surfacefacets.facets.SurfaceNormalFacet;
 import org.terasology.surfacefacets.facets.SurfaceSteepnessFacet;
 import org.terasology.world.block.Block;
 import org.terasology.world.block.BlockManager;
+import org.terasology.world.chunks.Chunks;
 import org.terasology.world.chunks.CoreChunk;
 import org.terasology.world.generation.Facet;
 import org.terasology.world.generation.Region;
@@ -71,9 +72,9 @@ public class SurfaceFacetsExampleRasterizer implements WorldRasterizer {
 
         Vector3i tempPos = new Vector3i();
         for (Vector3ic position : chunkRegion.getRegion()) {
-            Vector3i blockPosition = ChunkMath.calcRelativeBlockPos(position, tempPos);
+            Vector3i blockPosition = Chunks.toRelative(position, tempPos);
             if (surfacesFacet.getWorld(position)) {
-                Vector3f normal = surfaceNormalFacet.getWorld(position);
+                Vector3fc normal = surfaceNormalFacet.getWorld(position);
                 float steepness = surfaceSteepnessFacet.getWorld(position);
                 chunk.setBlock(blockPosition, getBlockFor(normal, steepness));
             } else {
@@ -96,12 +97,12 @@ public class SurfaceFacetsExampleRasterizer implements WorldRasterizer {
      * @param steepness
      * @return
      */
-    private Block getBlockFor(Vector3f normal, float steepness) {
+    private Block getBlockFor(Vector3fc normal, float steepness) {
         if (steepness <= MAX_SAND_STEEPNESS) {
             return sand;
         }
 
-        float eastNormal = normal.dot(Vector3f.east());
+        float eastNormal = normal.dot(Direction.RIGHT.asVector3f());
 
         if (eastNormal >= 0) {
             return grass;

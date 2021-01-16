@@ -15,7 +15,7 @@
  */
 package org.terasology.surfacefacets.providers;
 
-import org.terasology.math.geom.Vector3f;
+import org.joml.Vector3f;
 import org.terasology.surfacefacets.facets.SurfaceNormalFacet;
 import org.terasology.world.block.BlockRegion;
 import org.terasology.world.generation.Border3D;
@@ -75,7 +75,11 @@ public class SurfaceNormalProvider implements FacetProviderPlugin {
                 }
             }
         }
-        normal.safeNormalize();
+        // "safe normalize"
+        normal.normalize();
+        if (!normal.isFinite() || normal.length() < 0.000001f) {
+            normal.set(0, 0, 0);
+        }
         return normal;
     }
 }
