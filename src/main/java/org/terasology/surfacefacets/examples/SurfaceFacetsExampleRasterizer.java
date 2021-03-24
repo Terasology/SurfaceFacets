@@ -22,8 +22,8 @@ import org.terasology.engine.math.Direction;
 import org.terasology.engine.registry.CoreRegistry;
 import org.terasology.engine.world.block.Block;
 import org.terasology.engine.world.block.BlockManager;
+import org.terasology.engine.world.chunks.Chunk;
 import org.terasology.engine.world.chunks.Chunks;
-import org.terasology.engine.world.chunks.CoreChunk;
 import org.terasology.engine.world.generation.Facet;
 import org.terasology.engine.world.generation.Region;
 import org.terasology.engine.world.generation.Requires;
@@ -64,7 +64,7 @@ public class SurfaceFacetsExampleRasterizer implements WorldRasterizer {
     }
 
     @Override
-    public void generateChunk(CoreChunk chunk, Region chunkRegion) {
+    public void generateChunk(Chunk chunk, Region chunkRegion) {
         SurfacesFacet surfacesFacet = chunkRegion.getFacet(SurfacesFacet.class);
         DensityFacet densityFacet = chunkRegion.getFacet(DensityFacet.class);
         SurfaceNormalFacet surfaceNormalFacet = chunkRegion.getFacet(SurfaceNormalFacet.class);
